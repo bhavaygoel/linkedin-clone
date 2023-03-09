@@ -34,16 +34,21 @@ function Feed() {
 
   const sendPost = (e) => {
     e.preventDefault();
-
+    if(input === ""){
+      return;
+    }
     db.collection("posts").add({
       name: user.displayName,
       description: "This is a test",
       message: input,
       photoUrl: user.photoUrl || "",
+      likes: 0, // Add this field to store the number of likes
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
+    
     setInput("");
-  };
+};
+
 
   return (
     <div className="feed">
@@ -78,9 +83,11 @@ function Feed() {
       {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
         <Post
           key={id}
+          id={id}
           name={name}
           description={description}
           message={message}
+          photoUrl={photoUrl}
         />
       ))}
       </FlipMove>
