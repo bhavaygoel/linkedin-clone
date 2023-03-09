@@ -43,6 +43,7 @@ function Feed() {
       message: input,
       photoUrl: user.photoUrl || "",
       likes: 0, // Add this field to store the number of likes
+      liked: false,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
     
@@ -80,7 +81,7 @@ function Feed() {
 
       {/* Posts  */}
       <FlipMove>
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+      {posts.map(({ id, data: { name, description, message, photoUrl, liked } }) => (
         <Post
           key={id}
           id={id}
@@ -88,6 +89,7 @@ function Feed() {
           description={description}
           message={message}
           photoUrl={photoUrl}
+          liked={liked}
         />
       ))}
       </FlipMove>
